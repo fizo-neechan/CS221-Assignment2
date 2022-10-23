@@ -9,6 +9,7 @@ class NoobStack {
 
     public:
         NoobStack();
+        NoobStack(NoobStack copy);
         ~NoobStack();
 
         void push(T val);
@@ -22,6 +23,16 @@ NoobStack<T>::NoobStack(){
     this->bottom = NULL;
     this.head = NULL;
 }
+
+template <class T> 
+NoobStack<T>::NoobStack(NoobStack<T> copy){
+    this->size = copy.size;
+    this->top = new T[this->size];
+    for(int i = 0; i < this->size; i++)
+        this->top[i] = copy.top[i];
+    this->bottom = this->top[size-1];
+}
+
 
 template <class T> 
 NoobStack<T>::~NoobStack(){
