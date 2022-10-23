@@ -14,6 +14,7 @@ class MagicMaths {
         MagicMaths();
         ~MagicMaths();
 
+        int compute();
         friend std::istream& operator >> (std::istream &in, MagicMaths obj);
 
 
@@ -30,7 +31,7 @@ MagicMaths::~MagicMaths(){
 }
 
 int MagicMaths::assignValue(char a){
-    switch(a):{
+    switch(a) {
         case '(':
             return 0;
         case '^':
@@ -71,7 +72,7 @@ std::string MagicMaths::convertPostFix(std::string eq){
                         op.push(get);
                         op.push(newOP);
                         while(!temp.isEmpty())
-                            op.push(temp.pop()
+                            op.push(temp.pop());
                         break;
                     } else {
                         temp.push(newOP);
@@ -92,6 +93,43 @@ std::string MagicMaths::convertPostFix(std::string eq){
                 break;
         };
     }
+}
+
+
+int MagicMaths::compute(){
+    NoobStack<int> tempNums(nums);
+    NoobStack<char> tempOp(op);
+
+    
+    while (!tempOp.isEmpty())
+    {
+        char newOp = tempOp.pop();
+        switch(newOp) {
+            case '(':
+            case ')':
+                break;
+            case '^':
+                tempNums.push(pow(tempNums.pop(), tempNums.pop()));
+                break;
+            case '/':
+                tempNums.push(tempNums.pop() / tempNums.pop());
+                break;
+            case '*':
+                tempNums.push(tempNums.pop() * tempNums.pop());
+                break;
+            case '+':
+                tempNums.push(tempNums.pop() + tempNums.pop());
+                break;
+            case '-':
+                tempNums.push(tempNums.pop() - tempNums.pop());
+                break;
+
+            default:
+                std::cout << "bro what the fuck";
+        }
+    }
+    
+    return tempNums.pop();
 }
 
 
